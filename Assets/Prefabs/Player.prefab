@@ -147,9 +147,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4020796357528657680}
-  - component: {fileID: 4020796357528657686}
-  - component: {fileID: 4020796357528657687}
-  - component: {fileID: 7167659004213735302}
   m_Layer: 0
   m_Name: FirstPersonMovement
   m_TagString: Untagged
@@ -172,56 +169,6 @@ Transform:
   m_Father: {fileID: 4555721907948283695}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &4020796357528657686
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020796357528657681}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1.16
-  m_Radius: 0.2318907
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0.005003929, y: 1.015919, z: 0.002349198}
---- !u!114 &4020796357528657687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020796357528657681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87abd442b15e6aa4a863ed5d76d2178f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  sprintSpeed: 10
-  jumpForce: 600
-  sprintType: 1
-  gravityScale: 1
-  isInAir: 0
-  mainCamera: {fileID: 4020796356304861496}
-  playerInputController: {fileID: 4555721908403960083}
---- !u!114 &7167659004213735302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020796357528657681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4348cd9fd8192b4886e145bcabac8c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4555721907948283688
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +178,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4555721907948283695}
+  - component: {fileID: 2765552776476256033}
+  - component: {fileID: 1737001172341846003}
+  - component: {fileID: 6065595457018554405}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -255,6 +205,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &2765552776476256033
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555721907948283688}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.16
+  m_Radius: 0.2318907
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0.005003929, y: 1.015919, z: 0.002349198}
+--- !u!114 &1737001172341846003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555721907948283688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87abd442b15e6aa4a863ed5d76d2178f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 5
+  sprintSpeed: 10
+  jumpForce: 600
+  sprintType: 1
+  gravityScale: 1
+  isInAir: 0
+  mainCamera: {fileID: 4020796356304861496}
+  playerInputController: {fileID: 4555721908403960083}
+--- !u!114 &6065595457018554405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555721907948283688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4348cd9fd8192b4886e145bcabac8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistanceToDissolve: 100
 --- !u!1 &4555721908403960092
 GameObject:
   m_ObjectHideFlags: 0
