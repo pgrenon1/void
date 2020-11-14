@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 4020796357528657680}
   - component: {fileID: 4020796357528657686}
   - component: {fileID: 4020796357528657687}
+  - component: {fileID: 7167659004213735302}
   m_Layer: 0
   m_Name: FirstPersonMovement
   m_TagString: Untagged
@@ -209,6 +210,18 @@ MonoBehaviour:
   isInAir: 0
   mainCamera: {fileID: 4020796356304861496}
   playerInputController: {fileID: 4555721908403960083}
+--- !u!114 &7167659004213735302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020796357528657681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4348cd9fd8192b4886e145bcabac8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4555721907948283688
 GameObject:
   m_ObjectHideFlags: 0

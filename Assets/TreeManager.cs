@@ -1,41 +1,77 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TreeManager : MonoBehaviour
 {
-    public float maxEffectSqrDistanceFromPlayer = 100f;
+    //public float dissolutionRate = 0.1f;
+    //public AnimationCurve dissolutionRateOverDistanceSqr;
+    //public float maxEffectDistanceFromPlayer = 10f;
 
-    private Dictionary<TreeInstance, float> _trees = new Dictionary<TreeInstance, float>();
+    //private List<DissolvingTree> _dissolvingTrees = new List<DissolvingTree>();
+    //private Color32 _dissolvedColor;
 
-    void Start()
-    {
-        var terrain = GetComponent<Terrain>();
-        var trees = terrain.terrainData.treeInstances;
+    //private float MaxEffectDistanceFromPlayerSqr
+    //{
+    //    get
+    //    {
+    //        return maxEffectDistanceFromPlayer * maxEffectDistanceFromPlayer;
+    //    }
+    //}
 
-        foreach (var tree in trees)
-        {
-            _trees.Add(tree, 1f);
-        }
-    }
+    //public Terrain Terrain { get; private set; }
 
-    void Update()
-    {
-        foreach (KeyValuePair<TreeInstance, float> entry in _trees)
-        {
-            TreeInstance tree = entry.Key;
-            float value = entry.Value;
+    //void Start()
+    //{
+    //    Terrain = GetComponent<Terrain>();
+    //    var trees = Terrain.terrainData.treeInstances;
 
-            var delta = tree.position - GameManager.Instance.Player.transform.position;
-            if (delta.sqrMagnitude < maxEffectSqrDistanceFromPlayer)
-            {
-                var disappearanceRatio = Mathf.Lerp(0f, 1f, delta.sqrMagnitude);
-            }
-        }
-    }
+    //    foreach (var tree in trees)
+    //    {
+    //        _dissolvingTrees.Add(new DissolvingTree(tree, 1f));
+    //    }
 
-    private void OnDrawGizmosSelected()
-    {
-        
-    }
+    //    Debug.Log(_dissolvingTrees.Count);
+    //}
+
+    //void Update()
+    //{
+    //    var playerPosition = GameManager.Instance.Player.PlayerMovementController.transform.position;
+
+    //    foreach (var dissolvingTree in _dissolvingTrees)
+    //    {
+    //        var treePosition = dissolvingTree.tree.position;
+    //        treePosition.Scale(Terrain.terrainData.size);
+    //        var delta = treePosition - playerPosition;
+    //        var modifiedDissolutionRate = dissolutionRateOverDistanceSqr.Evaluate(delta.magnitude / maxEffectDistanceFromPlayer);
+    //        if (delta.sqrMagnitude < MaxEffectDistanceFromPlayerSqr && dissolvingTree.value > 0f)
+    //        {
+    //            dissolvingTree.value -= modifiedDissolutionRate * Time.deltaTime * modifiedDissolutionRate;
+    //            dissolvingTree.tree.color = Color32.Lerp(dissolvingTree.startingColor, Color.black, dissolvingTree.value);
+    //        }
+    //    }
+    //}
+
+    //private void OnDrawGizmosSelected()
+    //{
+    //    if (!Application.isPlaying)
+    //        return;
+
+    //    var guiStyle = new GUIStyle();
+    //    guiStyle.fontSize = 20;
+
+    //    var playerPosition = GameManager.Instance.Player.PlayerMovementController.transform.position;
+
+    //    foreach (var dissolvingTree in _dissolvingTrees)
+    //    {
+    //        var treePosition = dissolvingTree.tree.position;
+    //        treePosition.Scale(Terrain.terrainData.size);
+    //        var delta = treePosition - playerPosition;
+    //        if (delta.sqrMagnitude < MaxEffectDistanceFromPlayerSqr)
+    //        {
+    //            Handles.Label(treePosition + Vector3.up, dissolvingTree.value.ToString(), guiStyle);
+    //        }
+    //    }
+    //}
 }
