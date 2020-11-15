@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2371a1d5a4f85db4ea1331295695a0f5, type: 2}
+  - {fileID: 2100000, guid: 9b3bbb6cc9d46cb4789bff401a8cb7b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,8 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4929b987b7033e2468ef957439ee5678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolutionRate: 0.2
-  randomAmplitude: 0.03
+  dissolutionRate: 0.03
+  randomAmplitude: 0.005
   dissolutionRateOverDistance:
     serializedVersion: 2
     m_Curve:
@@ -136,6 +136,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxEffectDistanceFromPlayer: 100
+  _greatestDissolveRate: 0
 --- !u!205 &6729960756705013024
 LODGroup:
   m_ObjectHideFlags: 0

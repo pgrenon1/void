@@ -74,6 +74,7 @@ Material:
     m_Floats:
     - _BaseCellOffset: -0.548
     - _BaseCellSharpness: 0.126
+    - _BlackValue: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -94,6 +95,7 @@ Material:
     - _Parallax: 0.02
     - _RimOffset: 0.629
     - _RimPower: 0.142
+    - _RimValue: 0
     - _ShadowContribution: 0.558
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

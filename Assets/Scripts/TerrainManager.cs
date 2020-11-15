@@ -1,14 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class TerrainManager : MonoBehaviour
 {
+    public float dissolveRate;
+    public float maxDistanceToDissolve;
+
     private TreeInstance[] _originalTreeInstances;
     private RuntimeTreeReplacer _treeReplacer;
     private Material _material;
     private Texture2D _dissolveTexture;
     private float _maxDissolveDistanceSqr;
+    private NativeArray<float> _blackValues;
 
     private Player _player;
     public Player Player
@@ -22,9 +31,9 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
-        _maxDissolveDistanceSqr = Player.maxDistanceToDissolve * Player.maxDistanceToDissolve;
+        _maxDissolveDistanceSqr = maxDistanceToDissolve * maxDistanceToDissolve;
 
         _material = Terrain.activeTerrain.materialTemplate;
         var mainTex = _material.GetTexture("_MainTex");
@@ -35,6 +44,9 @@ public class TerrainManager : MonoBehaviour
             colors[i] = Color.white;
         }
         _dissolveTexture.SetPixels(colors);
+
+        var colorsLength = _dissolveTexture.GetPixels().Length;
+        _blackValues = new NativeArray<float>(colorsLength, Allocator.Persistent);
 
         SetupTrees();
     }
@@ -51,52 +63,51 @@ public class TerrainManager : MonoBehaviour
 
     private void Update()
     {
-        //var terrain = Terrain.activeTerrain;
-        //var terrainData = terrain.terrainData;
+        var terrain = Terrain.activeTerrain;
+        var terrainData = terrain.terrainData;
 
-        //var playerPos = Player.transform.position - terrain.transform.position;
-        //var xPosNormalized = Mathf.InverseLerp(0f, terrainData.size.x, playerPos.x);
-        //var yPosNormalized = Mathf.InverseLerp(0f, terrainData.size.z, playerPos.z);
+        var playerPos = Player.transform.position - terrain.transform.position;
+        var xPosNormalized = Mathf.InverseLerp(0f, terrainData.size.x, playerPos.x);
+        var yPosNormalized = Mathf.InverseLerp(0f, terrainData.size.z, playerPos.z);
 
-        ////var texture2D = _material.GetTexture("_DissolveTexture") as Texture2D;
+        var xPos = Mathf.Lerp(0f, _dissolveTexture.width, xPosNormalized);
+        var yPos = Mathf.Lerp(0f, _dissolveTexture.height, yPosNormalized);
 
-        //var xPos = Mathf.Lerp(0f, _dissolveTexture.width, xPosNormalized);
-        //var yPos = Mathf.Lerp(0f, _dissolveTexture.height, yPosNormalized);
+        var xInt = (System.Int32)xPos;
+        var yInt = (System.Int32)yPos;
 
-        //var xInt = (System.Int32)xPos;
-        //var yInt = (System.Int32)yPos;
+        var playerPosInTexture = new Vector2Int(xInt, yInt);
 
-        //var playerPosInTexture = new Vector2Int(xInt, yInt);
+        var colors = _dissolveTexture.GetPixels();
+        var colorsNative = new NativeArray<Color>(colors, Allocator.TempJob);
 
-        //for (int x = 0; x < _dissolveTexture.width; x++)
-        //{
-        //    for (int y = 0; y < _dissolveTexture.height; y++)
-        //    {
-        //        var pixelPos = new Vector2Int(x, y);
-        //        var delta = playerPosInTexture - pixelPos;
-        //        var distanceRatio = delta.sqrMagnitude / _maxDissolveDistanceSqr;
-        //        if (distanceRatio < 1f)
-        //        {
-        //            var oldColor = _dissolveTexture.GetPixel(x, y);
-        //            var newColor = Color.Lerp(Color.black, oldColor, distanceRatio);
-        //        }
-        //    }
-        //}
+        var job = new UpdateColorJob
+        {
+            BlackValues = _blackValues,
+            Colors = colorsNative,
+            PlayerPosition = playerPosInTexture,
+            TextureWidth = _dissolveTexture.width,
+            TargetColor = Color.black,
+            MaxDissolveDistanceSqr = _maxDissolveDistanceSqr,
+            DeltaTime = Time.deltaTime,
+            DissolutionRate = dissolveRate
+        };
+        var jobHandle = job.Schedule(colorsNative.Length, 1);
+        jobHandle.Complete();
 
-        ////float rSquared = dissolveRadius * dissolveRadius;
-        ////for (int u = xInt - dissolveRadius; u < xInt + dissolveRadius + 1; u++)
-        ////{
-        ////    for (int v = yInt - dissolveRadius; v < yInt + dissolveRadius + 1; v++)
-        ////    {
-        ////        if ((xInt - u) * (xInt - u) + (yInt - v) * (yInt - v) < rSquared)
-        ////            _dissolveTexture.SetPixel(u, v, Color.black);
-        ////    }
-        ////}
+        colorsNative.CopyTo(colors);
 
-        ////texture2D.SetPixel(xInt, yInt, Color.black);
+        _dissolveTexture.SetPixels(colors);
 
-        //_dissolveTexture.Apply(false);
-        //_material.SetTexture("_DissolveTexture", _dissolveTexture);
+        colorsNative.Dispose();
+
+        _dissolveTexture.Apply(false);
+        _material.SetTexture("_DissolveTexture", _dissolveTexture);
+    }
+
+    private void OnDisable()
+    {
+        _blackValues.Dispose();
     }
 
     private void OnApplicationQuit()
@@ -121,3 +132,49 @@ public class TerrainManager : MonoBehaviour
         Terrain.activeTerrain.terrainData.treeInstances = _originalTreeInstances;
     }
 }
+
+[BurstCompile(CompileSynchronously = true)]
+public struct UpdateColorJob : IJobParallelFor
+{
+    public NativeArray<Color> Colors;
+    public NativeArray<float> BlackValues;
+    public Vector2Int PlayerPosition;
+    public int TextureWidth;
+    public Color TargetColor;
+    public float MaxDissolveDistanceSqr;
+    public float DissolutionRate;
+    public float DeltaTime;
+    public float DissolveValue;
+
+    public void Execute(int index)
+    {
+        if (BlackValues[index] > 1f)
+            return;
+
+        var x = index % TextureWidth;
+        var y = index / TextureWidth;
+        var pixelPosition = new Vector2(x, y);
+
+        var delta = PlayerPosition - pixelPosition;
+        var distanceRatio = delta.sqrMagnitude / MaxDissolveDistanceSqr;
+
+        if (distanceRatio < 1f || BlackValues[index] > 0f)
+        {
+            BlackValues[index] += DissolutionRate /** (1 - distanceRatio)*/ * DeltaTime;
+            Colors[index] = Color.Lerp(Colors[index], TargetColor, BlackValues[index]);
+        }
+    }
+}
+
+//public struct PixelData
+//{
+//    public Vector2Int PlayerPosition;
+//    public NativeArray<Color32> Colors;
+//    public int TextureWidth;
+//    public Color32 TargetColor;
+//    public int Index;
+//    public float MaxDissolveDistanceSqr;
+//    public float DissolveRate;
+//    public float DeltaTime;
+//    public float DissolveValue;
+//}
