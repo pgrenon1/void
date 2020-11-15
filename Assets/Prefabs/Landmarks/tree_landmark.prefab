@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8656991992787978382}
   - component: {fileID: 2468407585430708101}
   - component: {fileID: 2088336922375480152}
+  - component: {fileID: 1938368744268485053}
+  - component: {fileID: 87382696541066148}
   m_Layer: 0
   m_Name: tree_landmark
   m_TagString: Untagged
@@ -135,3 +137,32 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxEffectDistanceFromPlayer: 100
+  _greatestDissolveRate: 0
+--- !u!114 &1938368744268485053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7143601992825891163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54f14b5a5f63b14189f45d0d217e1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &87382696541066148
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7143601992825891163}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

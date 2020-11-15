@@ -109,8 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4929b987b7033e2468ef957439ee5678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolutionRate: 0.2
-  randomAmplitude: 0.03
+  dissolutionRate: 0.03
+  randomAmplitude: 0.005
   dissolutionRateOverDistance:
     serializedVersion: 2
     m_Curve:
@@ -136,6 +136,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxEffectDistanceFromPlayer: 100
+  _greatestDissolveRate: 0
 --- !u!205 &8102242424257179148
 LODGroup:
   m_ObjectHideFlags: 0

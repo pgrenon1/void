@@ -97,6 +97,7 @@ Material:
     - _BaseCellOffset: -1
     - _BaseCellSharpness: 0.123
     - _BaseLight: 0.373
+    - _BlackValue: 0
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
@@ -119,6 +120,7 @@ Material:
     - _Parallax: 0.02
     - _RimOffset: 0.718
     - _RimPower: 0.01
+    - _RimValue: 0
     - _ShadowContribution: 0.558
     - _ShadowStrength: 0.474
     - _Shininess: 0.078125

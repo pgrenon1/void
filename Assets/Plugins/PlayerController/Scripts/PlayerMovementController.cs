@@ -45,7 +45,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             if (playerInputController.inputActions.Player.Jump.triggered)
             { 
-            gravity = jumpForce * Time.deltaTime;
+            gravity = jumpForce * Time.fixedDeltaTime;
             isInAir = true;
             }
         }
@@ -93,7 +93,7 @@ public class PlayerMovementController : MonoBehaviour
         else
         {
             isInAir = true;
-            gravity += gravityScale*Physics.gravity.y*Time.deltaTime;
+            gravity += gravityScale*Physics.gravity.y*Time.fixedDeltaTime;
         }
       
     }

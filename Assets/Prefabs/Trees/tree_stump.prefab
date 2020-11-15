@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4929b987b7033e2468ef957439ee5678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolutionRate: 0.2
-  randomAmplitude: 0.03
+  dissolutionRate: 0.03
+  randomAmplitude: 0.005
   dissolutionRateOverDistance:
     serializedVersion: 2
     m_Curve:
@@ -143,33 +143,16 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.7106101
-      value: 0.13470142
-      inSlope: 0.6228603
-      outSlope: 0.6228603
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.09234701
-      outWeight: 0.23644397
-    - serializedVersion: 3
-      time: 0.9490126
-      value: 0.59233123
-      inSlope: 4.2013597
-      outSlope: 4.2013597
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.244116
-      outWeight: 0.5779785
-    - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 13.0919485
-      outSlope: 13.0919485
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.22507852
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxEffectDistanceFromPlayer: 100
+  _greatestDissolveRate: 0
